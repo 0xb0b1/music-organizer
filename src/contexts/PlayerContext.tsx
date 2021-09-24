@@ -43,13 +43,13 @@ export const PlayerContextProvider = ({
   const [isShuffling, setIsShuffling] = useState(false);
 
   const play = (song: Song) => {
-    setPlaylist([song]);
+    // setPlaylist([song]);
     setCurrentSongIndex(0);
     setIsPlaying(true);
   };
 
   const playList = (list: Song[], index: number) => {
-    setPlaylist(list);
+    // setPlaylist(list);
     setCurrentSongIndex(index);
     setIsPlaying(true);
   };
@@ -71,7 +71,7 @@ export const PlayerContextProvider = ({
   };
 
   const clearPlayerState = () => {
-    setPlayingState([]);
+    // setPlayingState([]);
     setCurrentSongIndex(0);
   };
 

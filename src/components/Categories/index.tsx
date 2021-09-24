@@ -1,21 +1,18 @@
-import { useState, useEffect } from "react";
-
+// import { useState, useEffect } from "react";
 import play from "../../assets/play.svg";
 
 import { categories } from "../../categories.js";
 
-import axios from "axios";
-
-interface CategoriesProps {
-  items: Array<{
-    href: string;
-    icons: Array<{
-      url: string;
-    }>;
-    id: string;
-    name: string;
-  }>;
-}
+// interface CategoriesProps {
+//   items: Array<{
+//     href: string;
+//     icons: Array<{
+//       url: string;
+//     }>;
+//     id: string;
+//     name: string;
+//   }>;
+// }
 
 export const Categories = () => {
   // const [categories, setCategories] = useState<CategoriesProps>();

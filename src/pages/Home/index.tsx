@@ -1,4 +1,3 @@
-import { Categories } from "../../components/Categories";
 import { ShowPlayer } from "../../components/ShowPlayer";
 import { Sidebar } from "../../components/Sidebar";
 import { UserHome } from "../../components/UserHome";
