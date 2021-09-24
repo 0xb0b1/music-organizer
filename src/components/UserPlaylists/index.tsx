@@ -13,21 +13,21 @@ export const UserPlaylists = () => {
             <span className="text-lg font-semibold">New Playlist</span>
           </button>
         </div>
-        <div className="flex items-center justify-center bg-gray-700">
+        <div className="flex items-center justify-center">
           <img
             className="rounded-xl h-full w-full"
             src="https://cdn.playlists.net/images/playlists/image/medium/fcaf2e92e02d4180c525fe6935dd6108.jpg"
             alt="Summer Vibes"
           />
         </div>
-        <div className="flex items-center justify-center bg-gray-700">
+        <div className="flex items-center justify-center">
           <img
             className="rounded-xl h-full w-full"
             src="https://i.pinimg.com/originals/cb/ac/c3/cbacc3cd94470d4df50da4842ec5fe49.jpg"
             alt="Lofi"
           />
         </div>
-        <div className="flex items-center justify-center bg-gray-700 ">
+        <div className="flex items-center justify-center">
           <img
             className="rounded-xl h-full w-full"
             src="https://i.pinimg.com/originals/d3/b1/25/d3b1252338c0461134e34aa7f902552e.jpg"
