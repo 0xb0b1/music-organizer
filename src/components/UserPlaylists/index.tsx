@@ -7,9 +7,11 @@ export const UserPlaylists = () => {
         <h2 className="mt-2 text-lg font-semibold">My Playlists</h2>
       </header>
       <section className="w-full grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 py-4">
-        <div className="flex flex-col items-center justify-center h-68 w-68 bg-gray-800 rounded-xl">
-          <HiOutlinePlus size={32} />
-          <span className="text-lg font-semibold">New Playlist</span>
+        <div className="flex items-center justify-center h-68 w-68 bg-gray-800 rounded-xl hover:bg-gray-700">
+          <button type="button" className="flex flex-col items-center ">
+            <HiOutlinePlus size={32} />
+            <span className="text-lg font-semibold">New Playlist</span>
+          </button>
         </div>
         <div className="flex items-center justify-center bg-gray-700">
           <img
