@@ -5,7 +5,7 @@ export const SearchBox = () => {
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   return (
-    <label className="flex flex-1 py-2 px-4 ml-6 max-w-min relative items-center text-gray-100 bg-gray-800 rounded-full">
+    <label className="hidden md:flex flex-1 py-2 px-4 ml-20 max-w-min relative items-center text-gray-100 bg-gray-800 rounded-full">
       <input
         className="px-4 mr-4 border-none rounded-2xl text-gray-50 bg-gray-800 placeholder-gray-400"
         type="text"
