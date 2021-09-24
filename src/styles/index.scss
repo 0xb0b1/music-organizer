@@ -7,6 +7,17 @@ body {
   font-family: "Inter", sans-serif;
 }
 
+.tooltip {
+  visibility: hidden;
+  position: absolute;
+  left: 0;
+}
+
+.has-tooltip:hover .tooltip {
+  visibility: visible;
+  z-index: 100;
+}
+
 .w-fit {
   width: fit-content;
 }
