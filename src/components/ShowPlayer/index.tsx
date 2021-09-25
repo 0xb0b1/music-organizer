@@ -42,7 +42,7 @@ export const ShowPlayer = () => {
           </span>
         </div>
       ) : (
-        <div className="flex items-center justify-center w-full h-80 rounded-3xl bg-gradient-to-r linear-grad p-4 text-center">
+        <div className="flex items-center justify-center w-full h-80 rounded-3xl bg-gradient-to-r p-4 text-center">
           <strong>Select a song</strong>
         </div>
       )}
