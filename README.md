@@ -28,7 +28,7 @@
 
 
 # :eyes: Demo Website
-👉  demo: https://music-organizer-62xrscoyk-pvcente.vercel.app
+👉  demo: https://music-organizer-green.vercel.app
 
 # :computer: Technologies
 This project was made using the follow technologies:
