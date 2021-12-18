@@ -1,295 +1,129 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import axios from "axios";
+import { useState, useEffect } from "react";
+import { useRefreshToken } from "../../hooks/RefreshToken";
+
 import { RiHeart3Line, RiAddFill } from "react-icons/ri";
 import playGreen from "../../assets/play-green.svg";
 
+interface FeaturedPlaylistsProps {
+  playlists: {
+    items: {
+      description: string;
+      href: string;
+      id: string;
+      images: {
+        url: string;
+      }[];
+      name: string;
+      tracks: {
+        href: string;
+        total: number;
+      };
+      uri: string;
+    }[];
+  };
+}
+
 export const Recommendations = () => {
+  const { token, getRefreshToken } = useRefreshToken();
+
+  const [topTracks, setTopTracks] = useState();
+  const [featuredPlaylists, setFeaturedPlaylists] =
+    useState<FeaturedPlaylistsProps>();
+
+  useEffect(() => {
+    const source = axios.CancelToken.source();
+
+    const getFeaturedPlaylists = async () => {
+      const myToken = await getRefreshToken();
+      try {
+        const response = await axios.get(
+          "https://api.spotify.com/v1/browse/featured-playlists",
+          {
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + myToken,
+            },
+          }
+        );
+        setFeaturedPlaylists(response.data);
+      } catch (error) {
+        throw error;
+      }
+    };
+    getFeaturedPlaylists();
+
+    return () => {
+      source.cancel();
+    };
+  }, []);
+
+  console.log(featuredPlaylists?.playlists.items);
+
   return (
     <section className="pb-8">
-      <h2 className="mt-8 mb-2 font-semibold">Recomended songs</h2>
+      <h2 className="mt-8 mb-2 font-semibold">Recomended playlists</h2>
 
-      <table className="w-full bg-gray-800 rounded-3xl overflow-y-scroll">
+      <table className="w-full bg-gray-800 rounded-3xl">
         <thead>
           <tr>
             <th></th>
             <th className="px-4 py-3 text-gray-200 uppercase font-medium text-xs text-left">
-              Song
+              Description
             </th>
             <th className="px-4 py-3 text-gray-200 uppercase font-medium text-xs text-left">
-              Artist
+              Name
             </th>
             <th className="px-4 py-3 text-gray-200 uppercase font-medium text-xs text-left"></th>
             <th className="px-4 py-3 text-gray-200 uppercase font-medium text-xs text-left">
-              Duration
+              Number of Tracks
             </th>
             <th></th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td style={{ width: 72 }} className="px-4 py-3 text-sm">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/pt/a/a2/Ocean_Eyes_%28Official_Single_Cover%29_by_Billie_Eilish.png"
-                alt=""
-                className="w-8 h-8 rounded-sm"
-              />
-            </td>
-            <td>
-              <a
-                className="text-gray-100 font-semibold text-none leading-6 text-base hover:underline"
-                href="/"
-              >
-                Ocean Eyes
-              </a>
-            </td>
-            <td className="px-4 py-3 text-sm">Billie Eilish</td>
-            <td style={{ width: 100 }} className="px-4 py-3 text-sm"></td>
-            <td className="px-4 py-3 text-sm">4:15</td>
-            <td className="px-4 py-3 text-sm flex gap-1">
-              <button type="button">
-                <RiHeart3Line color="white" size={22} />
-              </button>
-              <button type="button">
-                <RiAddFill size={28} />
-              </button>
-              <button
-                type="button"
-                className="w-8 h-8 flex items-center justify-center  bg-gray-700 rounded-lg"
-              >
+          {featuredPlaylists?.playlists.items.map((item, index) => (
+            <tr key={index}>
+              <td style={{ width: 72 }} className="px-4 py-3 text-sm">
                 <img
-                  className="w-5 h-5 hover:brightness-95"
-                  src={playGreen}
-                  alt="Play song"
+                  src={item.images[0].url}
+                  alt="N"
+                  className="w-8 h-8 rounded-sm"
                 />
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td style={{ width: 72 }} className="px-4 py-3 text-sm">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/pt/a/a2/Ocean_Eyes_%28Official_Single_Cover%29_by_Billie_Eilish.png"
-                alt=""
-                className="w-8 h-8 rounded-sm"
-              />
-            </td>
-            <td>
-              <a
-                className="text-gray-100 font-semibold text-none leading-6 text-base hover:underline"
-                href="/"
-              >
-                Ocean Eyes
-              </a>
-            </td>
-            <td className="px-4 py-3 text-sm">Billie Eilish</td>
-            <td style={{ width: 100 }} className="px-4 py-3 text-sm"></td>
-            <td className="px-4 py-3 text-sm">4:15</td>
-            <td className="px-4 py-3 text-sm flex gap-1">
-              <button type="button">
-                <RiHeart3Line color="white" size={22} />
-              </button>
-              <button type="button">
-                <RiAddFill size={28} />
-              </button>
-              <button
-                type="button"
-                className="w-8 h-8 flex items-center justify-center  bg-gray-700 rounded-lg"
-              >
-                <img
-                  className="w-5 h-5 hover:brightness-95"
-                  src={playGreen}
-                  alt="Play song"
-                />
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td style={{ width: 72 }} className="px-4 py-3 text-sm">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/pt/a/a2/Ocean_Eyes_%28Official_Single_Cover%29_by_Billie_Eilish.png"
-                alt=""
-                className="w-8 h-8 rounded-sm"
-              />
-            </td>
-            <td>
-              <a
-                className="text-gray-100 font-semibold text-none leading-6 text-base hover:underline"
-                href="/"
-              >
-                Ocean Eyes
-              </a>
-            </td>
-            <td className="px-4 py-3 text-sm">Billie Eilish</td>
-            <td style={{ width: 100 }} className="px-4 py-3 text-sm"></td>
-            <td className="px-4 py-3 text-sm">4:15</td>
-            <td className="px-4 py-3 text-sm flex gap-1">
-              <button type="button">
-                <RiHeart3Line color="white" size={22} />
-              </button>
-              <button type="button">
-                <RiAddFill size={28} />
-              </button>
-              <button
-                type="button"
-                className="w-8 h-8 flex items-center justify-center  bg-gray-700 rounded-lg"
-              >
-                <img
-                  className="w-5 h-5 hover:brightness-95"
-                  src={playGreen}
-                  alt="Play song"
-                />
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td style={{ width: 72 }} className="px-4 py-3 text-sm">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/pt/a/a2/Ocean_Eyes_%28Official_Single_Cover%29_by_Billie_Eilish.png"
-                alt=""
-                className="w-8 h-8 rounded-sm"
-              />
-            </td>
-            <td>
-              <a
-                className="text-gray-100 font-semibold text-none leading-6 text-base hover:underline"
-                href="/"
-              >
-                Ocean Eyes
-              </a>
-            </td>
-            <td className="px-4 py-3 text-sm">Billie Eilish</td>
-            <td style={{ width: 100 }} className="px-4 py-3 text-sm"></td>
-            <td className="px-4 py-3 text-sm">4:15</td>
-            <td className="px-4 py-3 text-sm flex gap-1">
-              <button type="button">
-                <RiHeart3Line color="white" size={22} />
-              </button>
-              <button type="button">
-                <RiAddFill size={28} />
-              </button>
-              <button
-                type="button"
-                className="w-8 h-8 flex items-center justify-center  bg-gray-700 rounded-lg"
-              >
-                <img
-                  className="w-5 h-5 hover:brightness-95"
-                  src={playGreen}
-                  alt="Play song"
-                />
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td style={{ width: 72 }} className="px-4 py-3 text-sm">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/pt/a/a2/Ocean_Eyes_%28Official_Single_Cover%29_by_Billie_Eilish.png"
-                alt=""
-                className="w-8 h-8 rounded-sm"
-              />
-            </td>
-            <td>
-              <a
-                className="text-gray-100 font-semibold text-none leading-6 text-base hover:underline"
-                href="/"
-              >
-                Ocean Eyes
-              </a>
-            </td>
-            <td className="px-4 py-3 text-sm">Billie Eilish</td>
-            <td style={{ width: 100 }} className="px-4 py-3 text-sm"></td>
-            <td className="px-4 py-3 text-sm">4:15</td>
-            <td className="px-4 py-3 text-sm flex gap-1">
-              <button type="button">
-                <RiHeart3Line color="white" size={22} />
-              </button>
-              <button type="button">
-                <RiAddFill size={28} />
-              </button>
-              <button
-                type="button"
-                className="w-8 h-8 flex items-center justify-center  bg-gray-700 rounded-lg"
-              >
-                <img
-                  className="w-5 h-5 hover:brightness-95"
-                  src={playGreen}
-                  alt="Play song"
-                />
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td style={{ width: 72 }} className="px-4 py-3 text-sm">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/pt/a/a2/Ocean_Eyes_%28Official_Single_Cover%29_by_Billie_Eilish.png"
-                alt=""
-                className="w-8 h-8 rounded-sm"
-              />
-            </td>
-            <td>
-              <a
-                className="text-gray-100 font-semibold text-none leading-6 text-base hover:underline"
-                href="/"
-              >
-                Ocean Eyes
-              </a>
-            </td>
-            <td className="px-4 py-3 text-sm">Billie Eilish</td>
-            <td style={{ width: 100 }} className="px-4 py-3 text-sm"></td>
-            <td className="px-4 py-3 text-sm">4:15</td>
-            <td className="px-4 py-3 text-sm flex gap-1">
-              <button type="button">
-                <RiHeart3Line color="white" size={22} />
-              </button>
-              <button type="button">
-                <RiAddFill size={28} />
-              </button>
-              <button
-                type="button"
-                className="w-8 h-8 flex items-center justify-center  bg-gray-700 rounded-lg"
-              >
-                <img
-                  className="w-5 h-5 hover:brightness-95"
-                  src={playGreen}
-                  alt="Play song"
-                />
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td style={{ width: 72 }} className="px-4 py-3 text-sm">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/pt/a/a2/Ocean_Eyes_%28Official_Single_Cover%29_by_Billie_Eilish.png"
-                alt=""
-                className="w-8 h-8 rounded-sm"
-              />
-            </td>
-            <td>
-              <a
-                className="text-gray-100 font-semibold text-none leading-6 text-base hover:underline"
-                href="/"
-              >
-                Ocean Eyes
-              </a>
-            </td>
-            <td className="px-4 py-3 text-sm">Billie Eilish</td>
-            <td style={{ width: 100 }} className="px-4 py-3 text-sm"></td>
-            <td className="px-4 py-3 text-sm">4:15</td>
-            <td className="px-4 py-3 text-sm flex gap-1">
-              <button type="button">
-                <RiHeart3Line color="white" size={22} />
-              </button>
-              <button type="button">
-                <RiAddFill size={28} />
-              </button>
-              <button
-                type="button"
-                className="w-8 h-8 flex items-center justify-center  bg-gray-700 rounded-lg"
-              >
-                <img
-                  className="w-5 h-5 hover:brightness-95"
-                  src={playGreen}
-                  alt="Play song"
-                />
-              </button>
-            </td>
-          </tr>
+              </td>
+              <td>
+                <a
+                  className="text-gray-100 font-semibold text-none leading-6 text-xs hover:underline"
+                  href="/"
+                >
+                  {item.description}
+                </a>
+              </td>
+              <td className="px-4 py-3 text-sm">{item.name}</td>
+              <td style={{ width: 100 }} className="px-4 py-3 text-sm"></td>
+              <td className="px-4 py-3 text-sm">{item.tracks.total}</td>
+              <td className="px-4 py-3 text-sm flex gap-1">
+                <button type="button">
+                  <RiHeart3Line color="white" size={22} />
+                </button>
+                <button type="button">
+                  <RiAddFill size={28} />
+                </button>
+                <button
+                  type="button"
+                  className="w-8 h-8 flex items-center justify-center  bg-gray-700 rounded-lg"
+                >
+                  <img
+                    className="w-5 h-5 hover:brightness-95"
+                    src={playGreen}
+                    alt="Play song"
+                  />
+                </button>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
 
