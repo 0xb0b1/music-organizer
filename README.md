@@ -18,7 +18,7 @@
   <img alt="" src="https://img.shields.io/github/repo-size/0xb0b1/music-organizer?color=c9c9c9" />
 </p>
 
-> Music Organizer is an Application where you can organize your spotify playlists your way.
+> Music Organizer is an Application where you can organize your spotify playlists the way you like.
 
 
 <br />
