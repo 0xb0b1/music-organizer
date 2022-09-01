@@ -27,7 +27,7 @@ interface FeaturedPlaylistsProps {
 
 export const Recommendations = () => {
   const { token, getRefreshToken } = useRefreshToken();
-
+  const [isLoading, setIsLoading] = useState(true);
   const [topTracks, setTopTracks] = useState();
   const [featuredPlaylists, setFeaturedPlaylists] =
     useState<FeaturedPlaylistsProps>();
@@ -39,7 +39,7 @@ export const Recommendations = () => {
       const myToken = await getRefreshToken();
       try {
         const response = await axios.get(
-          "https://api.spotify.com/v1/browse/featured-playlists",
+          "https://api.spotify.com/v1/browse/featured-playlists?offset=0&limit=6",
           {
             headers: {
               Accept: "application/json",
@@ -49,6 +49,7 @@ export const Recommendations = () => {
           }
         );
         setFeaturedPlaylists(response.data);
+        setIsLoading(false);
       } catch (error) {
         throw error;
       }
@@ -60,7 +61,7 @@ export const Recommendations = () => {
     };
   }, []);
 
-  console.log(featuredPlaylists?.playlists.items);
+  if (isLoading) return <div>Loading</div>;
 
   return (
     <section className="pb-8">
@@ -98,7 +99,7 @@ export const Recommendations = () => {
                   className="text-gray-100 font-semibold text-none leading-6 text-xs hover:underline"
                   href="/"
                 >
-                  {item.description}
+                  {item.description.split(" ", 8).join(" ")} ...
                 </a>
               </td>
               <td className="px-4 py-3 text-sm">{item.name}</td>
@@ -127,8 +128,8 @@ export const Recommendations = () => {
         </tbody>
       </table>
 
-      <span className="text-sm font-semibold underline cursor-pointer">
-        show more
+      <span className="text-sm font-semibold px-4 py-4 cursor-pointer">
+        1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21
       </span>
     </section>
   );

@@ -32,7 +32,7 @@ export const Categories = () => {
   return (
     <div className="py-4 px-2 h-home w-full box-border overflow-y-scroll no-scrollbar">
       <section className="text-gray-50 h-full">
-        <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 w-full ">
+        <div className="flex flex-wrap flex-1 items-center justify-center w-full ">
           {categories?.items.map((item) => (
             <div
               className="relative flex items-end rounded-full mx-2 my-2 max-h-72 max-w-69"
